@@ -43,47 +43,50 @@ export default {
       <el-button class="pictrue"></el-button>
     </div>
     <div class="el-form2">
-      <el-form v-if="isLogin">
-        <el-form-item>
-          <el-input type="text" auto-complete="off" placeholder="请输入用户名" style="width: 400px">
-           <template slot="prepend"><i style="font-size: 20px" class="el-icon-user"></i></template>
-         </el-input>
-        </el-form-item>
-        <el-form-item>
-         <el-input type="text"  auto-complete="off" placeholder="请输入密码" style="width: 400px; margin-top: 20px">
-           <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
-          </el-input>
-        </el-form-item>
-        <el-link style="line-height: 20px;margin-top: 1px;margin-left: 330px" type="primary">忘记密码？</el-link>
-       <el-form-item>
-         <el-button style="width:400px; height: 40px; margin-top: 15px; font-size: 15px" type="primary" @click="login">登录</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button style="width:400px; height: 40px; margin-top: 10px; font-size: 15px" type="primary" plain>其他方式登录</el-button>
-       </el-form-item>
-       <div class="word1">
-         没有账号？ <el-link style="font-size: 15px" type="primary" @click="loginOrRegister">免费注册</el-link>
-       </div>
-      </el-form>
-      <el-form v-else>
-        <el-form-item>
-          <el-input type="text" auto-complete="off" placeholder="请输入用户名" style="width: 400px">
-            <template slot="prepend"><i style="font-size: 20px" class="el-icon-user"></i></template>
-          </el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input type="text"  auto-complete="off" placeholder="请输入密码" style="width: 400px; margin-top: 20px">
-            <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
-          </el-input>
-        </el-form-item>
-        <el-checkbox v-model="isAgree" @click="agree">我已同意。。。。。</el-checkbox>
-        <el-form-item>
-          <el-button style="width:400px; height: 40px; margin-top: 15px; font-size: 15px" type="primary" @click="register">注册</el-button>
-        </el-form-item>
-        <div class="word1">
-          已有账号？ <el-link style="font-size: 15px" type="primary" @click="loginOrRegister">立即登录</el-link>
-        </div>
-      </el-form>
+      <div>
+        <el-form v-if="isLogin">
+          <el-form-item>
+            <el-input type="text" auto-complete="off" placeholder="请输入用户名" style="width: 400px">
+              <template slot="prepend"><i style="font-size: 20px" class="el-icon-user"></i></template>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-input type="text"  auto-complete="off" placeholder="请输入密码" style="width: 400px; margin-top: 20px">
+              <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
+            </el-input>
+          </el-form-item>
+          <el-link style="line-height: 20px;margin-top: 1px;margin-left: 330px" type="primary">忘记密码？</el-link>
+          <el-form-item>
+            <el-button style="width:400px; height: 40px; margin-top: 15px; font-size: 15px" type="primary" @click="login">登录</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button style="width:400px; height: 40px; margin-top: 10px; font-size: 15px" type="primary" plain>其他方式登录</el-button>
+          </el-form-item>
+          <div class="word1">
+            没有账号？ <el-link style="font-size: 15px" type="primary" @click="loginOrRegister">免费注册</el-link>
+          </div>
+        </el-form>
+        <el-form v-else>
+          <el-form-item>
+            <el-input type="text" auto-complete="off" placeholder="请输入用户名" style="width: 400px">
+              <template slot="prepend"><i style="font-size: 20px" class="el-icon-user"></i></template>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-input type="text"  auto-complete="off" placeholder="请输入密码" style="width: 400px; margin-top: 20px">
+              <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
+            </el-input>
+          </el-form-item>
+          <el-checkbox v-model="isAgree" @click="agree">我已同意。。。。。</el-checkbox>
+          <el-form-item>
+            <el-button style="width:400px; height: 40px; margin-top: 15px; font-size: 15px" type="primary" @click="register">注册</el-button>
+          </el-form-item>
+          <div class="word1">
+            已有账号？ <el-link style="font-size: 15px" type="primary" @click="loginOrRegister">立即登录</el-link>
+          </div>
+        </el-form>
+      </div>
+
    </div>
   </div>
 </template>
