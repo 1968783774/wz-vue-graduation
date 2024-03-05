@@ -16,12 +16,10 @@ export default {
 
 <template>
   <div class="header-style">
-    <div>
       <button class="custom-button"  @click="getDrawer">
         <i class="el-icon-menu hover-icon" @mouseover="hover = true" @mouseout="hover = false"></i>
         <span class="hover-text" @mouseover="hover = true" @mouseout="hover = false">菜单</span>
       </button>
-    </div>
   </div>
 </template>
 
@@ -43,6 +41,7 @@ export default {
 .hover-icon,
 .hover-text {
   transition: color 0.3s; /* 添加颜色变化的过渡效果 */
+  color: rgba(89,89,89);
 }
 
 .hover-icon {
