@@ -46,7 +46,7 @@ export default {
       </el-aside>
       <el-main style="background-color: rgba(243,243,243)">
         <HomeMain v-if="currentView === 'home'"></HomeMain>
-        <PropertyManagement v-if="currentView === 'property'">
+        <PropertyManagement v-if="currentView === 'property'" :menu-index="asideActiveIndex">
         </PropertyManagement>
         <el-drawer
             size='50%'

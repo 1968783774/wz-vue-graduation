@@ -8,8 +8,8 @@ export default {
     selectProperty() {
       this.$emit('selectMenu', 'property');
     },
-    selectMenuItem(index) {
-      this.$emit('selectMenu', 'property',index);
+    selectMenuItem() {
+      this.$emit('selectMenu', 'property','2');
     }
   }
 }
@@ -28,7 +28,7 @@ export default {
         <el-divider direction="vertical"></el-divider>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: flex-start">
           <el-button class="menu-button">物业信息</el-button>
-          <el-button class="menu-button" @click="selectMenuItem('2')">小区信息</el-button>
+          <el-button class="menu-button" @click="selectMenuItem">小区信息</el-button>
           <el-button class="menu-button">岗位管理</el-button>
           <el-button class="menu-button">员工管理</el-button>
         </div>
