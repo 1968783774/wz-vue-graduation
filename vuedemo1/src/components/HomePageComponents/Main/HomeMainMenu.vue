@@ -4,12 +4,11 @@ export default {
   methods: {
     selectHome() {
       this.$emit('selectMenu', 'home');
+      this.$router.push("/home",() => {})
     },
-    selectProperty() {
-      this.$emit('selectMenu', 'property');
-    },
-    selectMenuItem() {
-      this.$emit('selectMenu', 'property','2');
+    selectMenuItem(itemIndex) {
+      this.$emit('selectMenu', 'property',itemIndex);
+      this.$router.push(itemIndex,() => {})
     }
   }
 }
@@ -22,15 +21,15 @@ export default {
     <el-card  class="drawer-card-style">
       <div style="display: flex;flex-direction: row;">
         <div>
-          <el-button class="property-button" @click="selectProperty">
+          <el-button class="property-button" @click="selectMenuItem('1')">
             <i class="el-icon-s-platform" style="margin-right: 5px;"></i>物业管理</el-button>
         </div>
         <el-divider direction="vertical"></el-divider>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: flex-start">
-          <el-button class="menu-button">物业信息</el-button>
-          <el-button class="menu-button" @click="selectMenuItem">小区信息</el-button>
-          <el-button class="menu-button">岗位管理</el-button>
-          <el-button class="menu-button">员工管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('1')">物业信息</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('2')">小区信息</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('3')">岗位管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('4')">员工管理</el-button>
         </div>
       </div>
     </el-card>

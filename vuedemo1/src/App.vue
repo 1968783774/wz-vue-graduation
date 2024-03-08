@@ -13,6 +13,10 @@ export default {
   name: 'App',
   components: {
     LoginInterface,
+  },
+  created() {
+    if (this.$router.path !== "/home")
+      this.$router.replace("home",()=>{})
   }
 }
 </script>

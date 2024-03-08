@@ -9,7 +9,6 @@ export default {
   },
   data() {
     return {
-      isCollapse: true
     };
   },
   methods: {
@@ -20,7 +19,10 @@ export default {
 
 <template>
   <div>
-    <el-menu :active-index="activeIndex">
+    <el-menu
+        router="router"
+        :default-active="activeIndex"
+        >
       <el-menu-item index="1">
         <i class="el-icon-menu"></i>
         <span slot="title">物业信息</span>
