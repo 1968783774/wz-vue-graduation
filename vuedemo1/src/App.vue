@@ -14,10 +14,10 @@ export default {
   components: {
     LoginInterface,
   },
-  created() {
-    if (this.$router.path !== "/home")
-      this.$router.replace("home",()=>{})
-  }
+  // created() {
+  //   if (this.$router.path !== "/home"&&this.$router.path !== "/")
+  //     this.$router.replace("home",()=>{})
+  // }
 }
 </script>
 

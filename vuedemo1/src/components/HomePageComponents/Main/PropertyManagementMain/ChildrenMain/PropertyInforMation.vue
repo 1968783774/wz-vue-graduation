@@ -28,9 +28,9 @@ export default {
 <template>
   <el-table
       :data="tableData"
-      header-cell-style="background-color: rgba(242,242,242); color: black"
+      header-cell-style="color: black"
       stripe
-      border
+      :border="true"
       style="width: 100%;border-radius: 20px">
     <el-table-column
         prop="date"

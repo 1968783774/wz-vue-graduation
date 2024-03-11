@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import LoginInterface from "@/components/LoginComponents/LoginInterface.vue";
-import CellInformation from "@/components/HomePageComponents/Main/CellInformation.vue";
-import HomePage from "@/components/HomePageComponents/HomePage.vue";
-import PropertyInforMation from "@/components/HomePageComponents/Main/PropertyInforMation.vue";
+import CellInformation from "@/components/HomePageComponents/Main/PropertyManagementMain/ChildrenMain/CellInformation.vue";
+import HomePage from "@/components/HomePageComponents/Main/HomePageMain/HomePage.vue";
+import PropertyInforMation from "@/components/HomePageComponents/Main/PropertyManagementMain/ChildrenMain/PropertyInforMation.vue";
+import PropertyManagement from "@/components/HomePageComponents/Main/PropertyManagementMain/PropertyManagement.vue";
 
 Vue.use(VueRouter)
 
@@ -17,23 +18,23 @@ const routes = [
         component: HomePage
     },
     {
-        path: '/wz',
-        component:HomePage,
+        path: '/property',
+        component:PropertyManagement,
         children:[
             {
-                path:'/1',
+                path:'1',
                 component:PropertyInforMation
             },
             {
-                path: '/2',
+                path: '2',
                 component: CellInformation
             },
             {
-                path: '/3',
+                path: '3',
                 component: CellInformation
             },
             {
-                path: '/4',
+                path: '4',
                 component: CellInformation
             }
         ]
