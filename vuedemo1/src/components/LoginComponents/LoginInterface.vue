@@ -11,13 +11,13 @@
 
 <template>
   <el-container style="background-color: whitesmoke; height: 100%">
-    <el-header style="height: 90px">
+    <el-header style="height: 10%">
 
     </el-header>
-    <el-main style="background-color: rgba(238,238,238)" >
+    <el-main style="background-color: rgba(238,238,238);height: 100%">
       <LoginMain></LoginMain>
     </el-main>
-    <el-footer style="background-color: rgba(46,46,55); height: 110px">
+    <el-footer style="background-color: rgba(46,46,55); height: 12%">
       <LoginFoot></LoginFoot>
     </el-footer>
   </el-container>
