@@ -35,17 +35,17 @@ export default {
 
 <template>
   <el-container style="height: 100%">
-    <el-header style="background-color: rgba(69,91,117);height: 7%;">
-      <HomeHeader @clickBrother="isDrawer"></HomeHeader>
+    <el-header style="background-color: rgba(69,91,117);height: 70px;display: flex; align-items: center;">
+      <HomeHeader style="display: flex; align-items: center;" @clickBrother="isDrawer"></HomeHeader>
     </el-header>
-    <div style="display: flex;height: 100%">
-      <el-aside style="width: 10%;height: 100%">
+    <el-container>
+      <el-aside style="width: 10%">
         <AsideMenu  :active-index="asideActiveIndex"></AsideMenu>
       </el-aside>
-      <el-main style="background-color: rgba(243,243,243)">
+      <el-main style="background-color: white">
         <router-view></router-view>
         <el-drawer
-            size='56.5%'
+            size='50%'
             :visible.sync="drawer"
             :direction="direction"
             :with-header="false"
@@ -54,14 +54,14 @@ export default {
           <HomeMainMenu @selectMenu="selectMenu"></HomeMainMenu>
         </el-drawer>
       </el-main>
-    </div>
+    </el-container>
   </el-container>
 </template>
 
 <style scoped>
 ::v-deep .el-drawer {
   background-color: rgba(243,243,243);
-  margin-top: 3.4%;
+  margin-top: 3.6%;
   border-radius: 10px;
   background-clip: padding-box;
   height: 100%;

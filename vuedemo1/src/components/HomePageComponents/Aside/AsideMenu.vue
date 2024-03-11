@@ -23,19 +23,19 @@ export default {
         router="router"
         :default-active="activeIndex"
         >
-      <el-menu-item index="/property/1">
+      <el-menu-item index="/property/1" style="color: rgba(140,140,140)">
         <i class="el-icon-menu"></i>
         <span slot="title">物业信息</span>
       </el-menu-item>
-      <el-menu-item index="/property/2">
+      <el-menu-item index="/property/2" style="color: rgba(140,140,140)">
         <i class="el-icon-menu"></i>
         <span slot="title">小区信息</span>
       </el-menu-item>
-      <el-menu-item index="/property/3">
+      <el-menu-item index="/property/3" style="color: rgba(140,140,140)">
         <i class="el-icon-setting"></i>
         <span slot="title">岗位管理</span>
       </el-menu-item>
-      <el-menu-item index="/property/4">
+      <el-menu-item index="/property/4" style="color: rgba(140,140,140)">
         <i class="el-icon-setting"></i>
         <span slot="title">员工管理</span>
       </el-menu-item>
@@ -44,4 +44,7 @@ export default {
 </template>
 
 <style scoped>
+::v-deep .el-menu{
+  height: 898px;
+}
 </style>

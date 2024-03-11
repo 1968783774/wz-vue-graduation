@@ -9,32 +9,61 @@ export default {
   methods:{
     getDrawer(){
       this.$emit('clickBrother')
+    },
+    open() {
+      this.$confirm('是否退出登录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$router.replace("/")
+      }).catch(() => {
+      });
     }
   }
 }
 </script>
 
 <template>
-  <div class="header-style">
-      <button class="custom-button"  @click="getDrawer">
-        <i class="el-icon-menu hover-icon" @mouseover="hover = true" @mouseout="hover = false"></i>
-        <span class="hover-text" @mouseover="hover = true" @mouseout="hover = false">菜单</span>
-      </button>
+  <div>
+    <button class="custom-button"  @click="getDrawer">
+      <i class="el-icon-menu hover-icon" @mouseover="hover = true" @mouseout="hover = false"></i>
+      <span class="hover-text" @mouseover="hover = true" @mouseout="hover = false">菜单</span>
+    </button>
+    <el-dropdown class="setting-button">
+        <i class="el-icon-setting" style="font-size: 35px;color: white"></i>
+      <el-dropdown-menu style="width: 200px">
+        <el-button style="border-color: transparent;width: 100%" icon="el-icon-switch-button" @click="open">退出登录</el-button>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
 <style scoped>
-.custom-button{
-  border-radius: 20px;
+.setting-button{
+  width: 50px;
+  height: 50px;
+  background-color: rgba(69,91,117);
   border-color: transparent;
-  margin-top: 10px;
+  margin-left: 1720px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease; /* 平滑过渡效果 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+}
+.setting-button:hover {
+  background-color: rgba(125,141,160); /* 鼠标悬停时背景颜色变为绿色 */
+}
+
+.setting-button:not(:hover) {
+  background-color: rgba(69,91,117); /* 鼠标离开后背景颜色恢复 */
+}
+.custom-button{
+  border-radius: 15px;
+  border-color: transparent;
   height: 40px;
   width: 100px;
-}
-.header-style{
-  display: flex;
-  flex-direction: row;
-  align-items: center; /* 垂直居中 */
 }
 
 
