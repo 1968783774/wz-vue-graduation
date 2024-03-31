@@ -4,12 +4,39 @@ export default {
   data() {
     return {
       isLogin:true,
-      isAgree:false
+      isAgree:false,
+      username: null,
+      password: null
     };
   },
   methods:{
     login(){
-      this.$router.replace('/home')
+      this.$axios.post(this.$httpUrl + '/login/login',
+          {
+            username:this.username,
+            password:this.password
+          })
+          .then(res => {
+            if (res.data.code===200&&res.data.data===true) {
+              this.$message({
+                message: '登录成功',
+                type: 'success'
+              });
+              this.$router.replace('/home')
+            }
+            else if(res.data.code===200&&res.data.data===false){
+              this.$message({
+                message: '请输入正确的账号或密码',
+                type: 'error'
+              });
+            }
+            else {
+              this.$message({
+                message: '系统出错，请联系管理员',
+                type: 'error'
+              });
+            }
+          })
     },
     loginOrRegister() {
       this.isLogin=!this.isLogin
@@ -46,12 +73,12 @@ export default {
       <div>
         <el-form v-if="isLogin">
           <el-form-item>
-            <el-input type="text" auto-complete="off" placeholder="请输入用户名" style="width: 400px">
+            <el-input type="text" auto-complete="off" placeholder="请输入用户名" v-model="username" style="width: 400px">
               <template slot="prepend"><i style="font-size: 20px" class="el-icon-user"></i></template>
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-input type="text"  auto-complete="off" placeholder="请输入密码" style="width: 400px; margin-top: 20px">
+            <el-input type="text"  auto-complete="off" placeholder="请输入密码" v-model="password" style="width: 400px; margin-top: 20px">
               <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
             </el-input>
           </el-form-item>
