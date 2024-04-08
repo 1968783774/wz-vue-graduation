@@ -37,6 +37,12 @@ export default {
               });
             }
           })
+          .catch(AxiosError=>{
+            this.$message({
+              message: AxiosError.stack,
+              type: 'error'
+            });
+          })
     },
     loginOrRegister() {
       this.isLogin=!this.isLogin

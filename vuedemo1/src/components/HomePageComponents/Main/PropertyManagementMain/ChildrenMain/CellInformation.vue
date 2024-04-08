@@ -6,79 +6,32 @@ export default {
       pageNum:1,
       pageSize:10,
       total:50,
-      tableData: [{
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }, {
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }, {
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }, {
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      },{
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }, {
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }, {
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      },{
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }, {
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }, {
-        neighbourhoodId: '小区id',
-        name: '小区名字',
-        address: '小区地址',
-        area: '1331',
-        city: '大连',
-        phone: '15804744178'
-      }]
+      tableData: []
     }
-  }
+  },
+  methods:{
+    getAll() {
+      this.$axios.get(this.$httpUrl + '/neighbourhood/list', {params: {
+        }}
+      ).then(res => {
+        console.log(res)
+        if (res.data.code===200) {
+          console.log(res.data)
+          this.tableData=res.data.data
+        }
+        else {
+          this.$message({
+            message: '系统出错，请联系管理员',
+            type: 'error'
+          });
+        }
+      })
+    },
+  },
+
+  beforeMount() {
+    this.getAll();
+  },
 }
 </script>
 
@@ -96,22 +49,22 @@ export default {
         ></el-table-column>
         <el-table-column
             fixed
-            prop="name"
-            label="小区名字"
-            width="300">
-        </el-table-column>
-        <el-table-column
-            prop="neighbourhoodId"
+            prop="id"
             label="小区id"
             width="180">
         </el-table-column>
         <el-table-column
-            prop="address"
+            prop="neighbourhoodName"
+            label="小区名字"
+            width="300">
+        </el-table-column>
+        <el-table-column
+            prop="neighbourhoodAddress"
             label="地址"
             width="800">
         </el-table-column>
         <el-table-column
-            prop="area"
+            prop="floorRage"
             label="占地面积"
             width="180">
         </el-table-column>
