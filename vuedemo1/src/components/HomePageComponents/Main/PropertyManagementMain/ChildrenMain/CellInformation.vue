@@ -45,6 +45,29 @@ export default {
       this.resetForm();
     },
     save() {
+      this.$axios.post(this.$httpUrl + '/neighbourhood/add', [this.formData])
+          .then(res => {
+            if (res.data.code === 200&&res.data.data==='添加成功') {
+              this.$message({
+                message: res.data.data,
+                type:'success'
+              });
+            } else {
+              this.$message({
+                message: res.data.data,
+                type: 'error'
+              });
+            }
+            this.dialogVisible = false;
+            this.resetForm();
+            this.getAll();
+          })
+          .catch(error => {
+            this.$message({
+              message: error,
+              type: 'error'
+            });
+          });
     },
     cancel() {
       this.dialogVisible = false;
@@ -72,6 +95,7 @@ export default {
     <el-header>
       <el-button @click="showForm">新增小区</el-button>
       <el-dialog :visible.sync="dialogVisible">
+        <span slot="title" style="font-size: 20px;margin-bottom: 10px">新增小区</span>
         <el-form label-width="80px">
           <el-form-item label="小区名称">
             <el-input v-model="formData.neighbourhoodName"></el-input>
@@ -84,10 +108,10 @@ export default {
           </el-form-item>
           <el-form-item label="所在城市">
             <el-select v-model="formData.city" placeholder="请选择城市">
-              <el-option label="北京" value="beijing"></el-option>
-              <el-option label="上海" value="shanghai"></el-option>
-              <el-option label="广州" value="guangzhou"></el-option>
-              <el-option label="深圳" value="shenzhen"></el-option>
+              <el-option label="北京" value="北京"></el-option>
+              <el-option label="上海" value="上海"></el-option>
+              <el-option label="广州" value="广州"></el-option>
+              <el-option label="深圳" value="深圳"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="联系方式">
