@@ -6,65 +6,94 @@ export default {
       isLogin:true,
       isAgree:false,
       username: null,
-      password: null
+      password: null,
+      isLoginSuccess:null,
+      loginResult:null,
     };
   },
   methods:{
-    login(){
+    // 登录
+    login() {
       this.$axios.post(this.$httpUrl + '/login/login',
           {
-            username:this.username,
-            password:this.password
+            username: this.username,
+            password: this.password
           })
           .then(res => {
-            if (res.data.code===200&&res.data.data===true) {
+            if (res.data.code === 200 && res.data.data.isLoginSuccess=== true) {
               this.$message({
-                message: '登录成功',
+                message: res.data.data.loginResult,
                 type: 'success'
               });
               this.$router.replace('/home')
-            }
-            else if(res.data.code===200&&res.data.data===false){
+            } else if (res.data.code === 200 && res.data.data.isLoginSuccess=== false) {
               this.$message({
-                message: '请输入正确的账号或密码',
+                message: res.data.data.loginResult,
                 type: 'error'
               });
-            }
-            else {
+            } else {
               this.$message({
-                message: '系统出错，请联系管理员',
+                message: res.data.message,
                 type: 'error'
               });
             }
           })
-          .catch(AxiosError=>{
+          .catch(error => {
             this.$message({
-              message: AxiosError.stack,
+              message: error,
               type: 'error'
             });
           })
     },
+
     loginOrRegister() {
       this.isLogin=!this.isLogin
     },
+
     agree(){
       this.isAgree=true
     },
-    register(){
-      if (this.isAgree===true){
+
+    // 注册
+    register() {
+      if (this.isAgree === false) {
         this.$message({
-          message: '注册成功',
-          type: 'success'
-        });
-        this.loginOrRegister()
-      }else {
-        this.$message({
-          message: '注册失败',
+          message: "请先同意并勾选政策和协议",
           type: 'warning'
         });
+      }else {
+        this.$axios.post(this.$httpUrl + '/login/register',
+            {
+              username: this.username,
+              password: this.password
+            }).then(res => {
+          if (res.data.code === 200 && res.data.data === true) {
+            this.$message({
+              message: "注册成功",
+              type: 'success'
+            });
+            this.loginOrRegister()
+          } else if (res.data.code === 200 && res.data.data === false) {
+            this.$message({
+              message: "注册失败",
+              type: 'error'
+            });
+          } else {
+            this.$message({
+              message: res.data.message,
+              type: 'error'
+            });
+          }
+        }).catch(error => {
+          this.$message({
+            message: error,
+            type: 'error'
+          });
+        })
       }
     },
-    forgetPassword(){
+
+    forgetPassword() {
     },
   }
 }
@@ -101,16 +130,16 @@ export default {
         </el-form>
         <el-form v-else>
           <el-form-item>
-            <el-input type="text" auto-complete="off" placeholder="请输入用户名" style="width: 400px">
+            <el-input type="text" auto-complete="off" placeholder="请输入用户名" v-model="username" style="width: 400px">
               <template slot="prepend"><i style="font-size: 20px" class="el-icon-user"></i></template>
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-input type="text"  auto-complete="off" placeholder="请输入密码" style="width: 400px; margin-top: 20px">
+            <el-input type="text"  auto-complete="off" placeholder="请输入密码"  v-model="password" style="width: 400px; margin-top: 20px">
               <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
             </el-input>
           </el-form-item>
-          <el-checkbox v-model="isAgree" @click="agree">我已同意。。。。。</el-checkbox>
+          <el-checkbox v-model="isAgree" @click="agree">已同意政策或协议</el-checkbox>
           <el-form-item>
             <el-button style="width:400px; height: 40px; margin-top: 15px; font-size: 15px" type="primary" @click="register">注册</el-button>
           </el-form-item>

@@ -1,6 +1,6 @@
 <script>
 import HomeHeader from "@/components/HomePageComponents/Header/HomeHeader.vue";
-import HomeMainMenu from "@/components/HomePageComponents/MainMenu/HomeMainMenu.vue";
+import HomeMainMenu from "@/components/MainMenu/HomeMainMenu.vue";
 import HomeMain from "@/components/HomePageComponents/Main/HomePageMain/ChildrenMain/HomeMain.vue";
 
 export default {
