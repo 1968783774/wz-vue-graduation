@@ -98,7 +98,7 @@ export default {
       <div style="display: flex;flex-direction: row;">
         <div>
           <el-button class="property-button" @click="selectMenuItem('/property/1')">
-            <i class="el-icon-s-platform" style="margin-right: 5px;"></i>费用管理</el-button>
+            <i class="el-icon-s-order" style="margin-right: 5px;"></i>费用管理</el-button>
         </div>
         <el-divider direction="vertical"></el-divider>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: flex-start">

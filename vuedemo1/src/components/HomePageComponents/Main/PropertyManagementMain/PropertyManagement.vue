@@ -1,6 +1,6 @@
 <script>
 
-import HomeMainMenu from "@/components/MainMenu/HomeMainMenu.vue";
+import HomeMainMenu from "@/components/HomePageComponents/MainMenu/HomeMainMenu.vue";
 import HomeHeader from "@/components/HomePageComponents/Header/HomeHeader.vue";
 import AsideMenu from "@/components/HomePageComponents/Aside/AsideMenu.vue";
 

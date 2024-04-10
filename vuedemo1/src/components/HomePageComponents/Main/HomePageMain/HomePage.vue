@@ -1,6 +1,6 @@
 <script>
 import HomeHeader from "@/components/HomePageComponents/Header/HomeHeader.vue";
-import HomeMainMenu from "@/components/MainMenu/HomeMainMenu.vue";
+import HomeMainMenu from "@/components/HomePageComponents/MainMenu/HomeMainMenu.vue";
 import HomeMain from "@/components/HomePageComponents/Main/HomePageMain/ChildrenMain/HomeMain.vue";
 
 export default {
@@ -33,9 +33,11 @@ export default {
 
 <template>
   <el-container style="height: 100%">
+
     <el-header style="background-color: rgba(69,91,117);height: 70px;display: flex; align-items: center;">
       <HomeHeader style="display: flex; align-items: center;" @clickBrother="isDrawer"></HomeHeader>
     </el-header>
+
     <div style="display: flex;height: 100%">
       <el-main style="background-color: rgba(243,243,243)">
         <HomeMain></HomeMain>
@@ -50,6 +52,7 @@ export default {
         </el-drawer>
       </el-main>
     </div>
+
   </el-container>
 </template>
 
