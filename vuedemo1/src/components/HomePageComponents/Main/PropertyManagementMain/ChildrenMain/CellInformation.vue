@@ -244,8 +244,8 @@ export default {
 <template>
   <el-container style="height: 100%">
     <el-header>
-      <el-button @click="showForm" style="border-color: rgb(189,229,245);">新增小区</el-button>
-      <el-button @click="deleteSelectedIds" style="border-color: rgb(189,229,245);">删除小区</el-button>
+      <el-button @click="showForm" type="primary">新增小区</el-button>
+      <el-button @click="deleteSelectedIds" type="danger">删除小区</el-button>
       <el-dialog :visible.sync="dialogVisible">
         <span slot="title" style="font-size: 20px;margin-bottom: 10px">{{dialogTitle}}</span>
         <el-form label-width="80px">

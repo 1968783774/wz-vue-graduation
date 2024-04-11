@@ -8,7 +8,13 @@ export default {
       drawer: false,
       direction: 'ltr',
       activeIndex: '1',
-      pieChart: null
+      pieChart1: null,
+      pieChart2: null,
+      livedIn:20,
+      livedOut:10,
+      carIn:10,
+      carOut:5,
+
     }
   },
   methods:{
@@ -16,15 +22,16 @@ export default {
       this.drawer=!this.drawer
     },
     initPieChart() {
-      this.pieChart = this.$echarts.init(this.$refs.pieChart);
+      this.pieChart1 = this.$echarts.init(this.$refs.pieChart1);
+      this.pieChart2 = this.$echarts.init(this.$refs.pieChart2);
       this.renderPieChart();
     },
     renderPieChart() {
-      const option = {
+      const option1 = {
         legend: {
           orient: 'vertical',
           x: 'right',
-          data: ['A', 'B',]
+          data: ['已入住', '未入住',]
         },
         series: [
           {
@@ -41,18 +48,51 @@ export default {
             emphasis: {
               label: {
                 show: true,
-                fontSize: '30',
+                fontSize: '14',
                 fontWeight: 'bold'
               }
             },
             data: [
-              { value: 335, name: 'A' },
-              { value: 310, name: 'B' }
+              { value: this.livedIn, name: '已入住' },
+              { value: this.livedOut, name: '未入住' }
             ]
           }
         ]
       };
-      this.pieChart.setOption(option);
+      const option2 = {
+        legend: {
+          orient: 'vertical',
+          x: 'right',
+          data: ['已停车辆', '剩余车辆',]
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            labelLine: {
+              show: false
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '14',
+                fontWeight: 'bold'
+              }
+            },
+            data: [
+              { value: this.livedIn, name: '已停车辆',itemStyle:{color:'skyblue'} },
+              { value: this.livedOut, name: '剩余车辆',itemStyle:{color:'yellow'} }
+            ]
+          }
+        ]
+      };
+      this.pieChart1.setOption(option1);
+      this.pieChart2.setOption(option2);
     }
   },
   mounted() {
@@ -121,9 +161,22 @@ export default {
       </el-card>
       <el-card class="card-style-children3">
         <span style="font-size: 25px;font-weight: bold;">住户统计</span>
-        <div ref="pieChart" style="height: 250px; width: 500px; "></div>
+        <div ref="pieChart1" style="height: 250px; width: 500px; "></div>
+        <div style="display: flex; align-items: center;justify-content: space-between;margin-top: 30px;margin-left:10px">
+          <span style="font-size: 20px;font-weight: bold;">已入住：{{this.livedIn}}</span>
+          <span style="font-size: 20px;font-weight: bold;">未入住：{{this.livedOut}}</span>
+          <span style="font-size: 20px;font-weight: bold;">房屋总数：{{this.livedIn+this.livedOut}}</span>
+        </div>
       </el-card>
-      <el-card class="card-style-children4"></el-card>
+      <el-card class="card-style-children4">
+        <span style="font-size: 25px;font-weight: bold;">车辆统计</span>
+        <div ref="pieChart2" style="height: 250px; width: 500px; "></div>
+        <div style="display: flex; align-items: center;justify-content: space-between;margin-top: 30px;margin-left:10px">
+          <span style="font-size: 20px;font-weight: bold;">已停车辆：{{this.carIn}}</span>
+          <span style="font-size: 20px;font-weight: bold;">剩余车位：{{this.carOut}}</span>
+          <span style="font-size: 20px;font-weight: bold;">车位总数：{{this.carIn+this.carOut}}</span>
+        </div>
+      </el-card>
       <el-card class="card-style-children">
         <el-calendar></el-calendar></el-card>
     </div>

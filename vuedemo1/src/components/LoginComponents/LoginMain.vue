@@ -113,7 +113,7 @@ export default {
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-input type="text"  auto-complete="off" placeholder="请输入密码" v-model="password" style="width: 400px; margin-top: 20px">
+            <el-input type="text"  auto-complete="off" placeholder="请输入密码" v-model="password"  show-password style="width: 400px; margin-top: 20px">
               <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
             </el-input>
           </el-form-item>
