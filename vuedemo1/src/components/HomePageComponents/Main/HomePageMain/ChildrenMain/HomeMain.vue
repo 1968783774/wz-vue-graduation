@@ -10,18 +10,11 @@ export default {
       activeIndex: '1',
       pieChart1: null,
       pieChart2: null,
-      in:20,
-      notin:10,
-      carIn:50,
-      carNotIn:10,
-    }
-  },
-  computed: {
-    allIn(){
-      return this.in+this.notin;
-    },
-    allCarIn(){
-      return this.carIn+this.carNotIn;
+      livedIn:20,
+      livedOut:10,
+      carIn:10,
+      carOut:5,
+
     }
   },
   methods:{
@@ -46,9 +39,8 @@ export default {
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
             label: {
-              show: true,
-              position: 'outside',
-              formatter: '{b}: {c} ({d}%)'
+              show: false,
+              position: 'center'
             },
             labelLine: {
               show: false
@@ -61,8 +53,8 @@ export default {
               }
             },
             data: [
-              { value: this.in, name: '已入住' },
-              { value: this.notin, name: '未入住' }
+              { value: this.livedIn, name: '已入住' },
+              { value: this.livedOut, name: '未入住' }
             ]
           }
         ]
@@ -71,7 +63,7 @@ export default {
         legend: {
           orient: 'vertical',
           x: 'right',
-          data: ['已停车辆数', '剩余车位数',]
+          data: ['已停车辆', '剩余车辆',]
         },
         series: [
           {
@@ -79,9 +71,8 @@ export default {
             radius: ['50%', '70%'],
             avoidLabelOverlap: false,
             label: {
-              show: true,
-              position: 'outside',
-              formatter: '{b}: {c} ({d}%)'
+              show: false,
+              position: 'center'
             },
             labelLine: {
               show: false
@@ -94,15 +85,15 @@ export default {
               }
             },
             data: [
-              { value: this.carIn, name: '已停车辆数', itemStyle: { color: '#5ab1ef' } },
-              { value: this.carNotIn, name: '剩余车位数',itemStyle:{color: '#f9e663'} }
+              { value: this.livedIn, name: '已停车辆',itemStyle:{color:'skyblue'} },
+              { value: this.livedOut, name: '剩余车辆',itemStyle:{color:'yellow'} }
             ]
           }
         ]
       };
       this.pieChart1.setOption(option1);
       this.pieChart2.setOption(option2);
-    },
+    }
   },
   mounted() {
     this.initPieChart();
@@ -137,7 +128,7 @@ export default {
             <div style="background-color: rgb(246, 246, 246); height: 80px; width: 80px; display: flex; align-items: center; justify-content: center; border-radius: 20px;">
               <i class="iconfont icon-qianlv-jiaotong" style="margin-right: 5px; font-size: 50px; color: rgb(90, 206, 183);"></i>
             </div>
-            <span style="position: absolute; top: 5px; right: 5px;font-size:25px;font-weight: bold;">130</span>
+            <span style="position: absolute; top: 5px; right: 5px;font-size:25px;font-weight: bold;">130/20</span>
             <span style="position: absolute; bottom: 5px; right: 5px;font-size:15px;font-weight: bold;">车位</span>
           </div>
         </div>
@@ -171,19 +162,19 @@ export default {
       <el-card class="card-style-children3">
         <span style="font-size: 25px;font-weight: bold;">住户统计</span>
         <div ref="pieChart1" style="height: 250px; width: 500px; "></div>
-        <div style="display: flex; justify-content: space-between; margin-top: 30px;">
-          <span style="font-size: 20px;font-weight: bold;">已入住:{{this.in}}</span>
-          <span style="font-size: 20px;font-weight: bold;">未入住:{{this.notin}}</span>
-          <span style="font-size: 20px;font-weight: bold;">房屋总数:{{this.allIn}}</span>
+        <div style="display: flex; align-items: center;justify-content: space-between;margin-top: 30px;margin-left:10px">
+          <span style="font-size: 20px;font-weight: bold;">已入住：{{this.livedIn}}</span>
+          <span style="font-size: 20px;font-weight: bold;">未入住：{{this.livedOut}}</span>
+          <span style="font-size: 20px;font-weight: bold;">房屋总数：{{this.livedIn+this.livedOut}}</span>
         </div>
       </el-card>
       <el-card class="card-style-children4">
-        <span style="font-size: 25px;font-weight: bold;">停车场统计</span>
+        <span style="font-size: 25px;font-weight: bold;">车辆统计</span>
         <div ref="pieChart2" style="height: 250px; width: 500px; "></div>
-        <div style="display: flex; justify-content: space-between; margin-top: 30px;">
-          <span style="font-size: 20px;font-weight: bold;">已停车辆数:{{ this.carIn }}</span>
-          <span style="font-size: 20px;font-weight: bold;">剩余车位数:{{ this.carNotIn }}</span>
-          <span style="font-size: 20px;font-weight: bold;">房屋总数:{{this.allCarIn}}</span>
+        <div style="display: flex; align-items: center;justify-content: space-between;margin-top: 30px;margin-left:10px">
+          <span style="font-size: 20px;font-weight: bold;">已停车辆：{{this.carIn}}</span>
+          <span style="font-size: 20px;font-weight: bold;">剩余车位：{{this.carOut}}</span>
+          <span style="font-size: 20px;font-weight: bold;">车位总数：{{this.carIn+this.carOut}}</span>
         </div>
       </el-card>
       <el-card class="card-style-children">
