@@ -9,6 +9,7 @@ export default {
       password: null,
       isLoginSuccess:null,
       loginResult:null,
+      loginToken:null
     };
   },
   methods:{
@@ -25,6 +26,7 @@ export default {
                 message: res.data.data.loginResult,
                 type: 'success'
               });
+              sessionStorage.setItem('loginToken', res.data.data.loginToken)
               this.$router.replace('/home')
             } else if (res.data.code === 200 && res.data.data.isLoginSuccess=== false) {
               this.$message({
@@ -113,7 +115,7 @@ export default {
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-input type="text"  auto-complete="off" placeholder="请输入密码" v-model="password"  show-password style="width: 400px; margin-top: 20px">
+            <el-input type="text"  auto-complete="off" placeholder="请输入密码" v-model="password"  clearablestyle="width: 400px; margin-top: 20px">
               <template slot="prepend"><i style="font-size:20px;height: 20px" class="el-icon-key"></i></template>
             </el-input>
           </el-form-item>
