@@ -35,7 +35,7 @@ export default {
 
 <template>
   <el-container style="height: 100%">
-    <el-header style="background-color: rgba(69,91,117);height: 70px;display: flex; align-items: center;">
+    <el-header style="background-color: rgba(69,91,117);height: 60px;display: flex; align-items: center;">
       <HomeHeader style="display: flex; align-items: center;" @clickBrother="isDrawer"></HomeHeader>
     </el-header>
     <el-container>

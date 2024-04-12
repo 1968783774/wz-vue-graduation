@@ -31,8 +31,12 @@ export default {
               console.log(res.data.data)
             }
           })
-          .catch(
-          )
+          .catch(error => {
+            this.$message.error({
+              message: error,
+              center: true
+            })
+          })
     },
     startEditing() {
       this.editing = true;

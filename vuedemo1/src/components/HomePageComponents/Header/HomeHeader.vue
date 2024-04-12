@@ -16,6 +16,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        sessionStorage.removeItem("loginToken")
         this.$router.replace("/")
       }).catch(() => {
       });
@@ -41,8 +42,8 @@ export default {
 
 <style scoped>
 .setting-button{
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   background-color: rgba(69,91,117);
   border-color: transparent;
   margin-left: 1720px;
@@ -60,10 +61,10 @@ export default {
   background-color: rgba(69,91,117); /* 鼠标离开后背景颜色恢复 */
 }
 .custom-button{
-  border-radius: 15px;
+  border-radius: 20px;
   border-color: transparent;
   height: 40px;
-  width: 100px;
+  width: 90px;
 }
 
 
