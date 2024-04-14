@@ -31,7 +31,7 @@ axios.interceptors.request.use(
 
 Vue.use(Element);
 Vue.config.productionTip = false
-Vue.prototype.$httpUrl = 'http://localhost:8888'
+Vue.prototype.$httpUrl = 'http://81.70.229.203:8888'
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
 
