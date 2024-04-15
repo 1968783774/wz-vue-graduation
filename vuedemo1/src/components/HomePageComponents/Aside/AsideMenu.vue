@@ -20,6 +20,7 @@ export default {
 <template>
   <div>
     <el-menu
+        class="wzz"
         router="router"
         :default-active="activeIndex"
         >
@@ -44,7 +45,8 @@ export default {
 </template>
 
 <style scoped>
-::v-deep .el-menu{
-  height: 898px;
+
+.wzz{
+  height: 100vh;
 }
 </style>

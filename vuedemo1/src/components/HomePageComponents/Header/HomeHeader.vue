@@ -4,6 +4,23 @@ export default {
   data() {
     return {
       hover: false, // 用于判断鼠标是否悬停在按钮上
+      options: [{
+        value: '选项1',
+        label: '黄金糕小区'
+      }, {
+        value: '选项2',
+        label: '双皮奶小区'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎小区'
+      }, {
+        value: '选项4',
+        label: '龙须面小区'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭小区'
+      }],
+      value: ''
     };
   },
   methods:{
@@ -31,6 +48,14 @@ export default {
       <i class="el-icon-menu hover-icon" @mouseover="hover = true" @mouseout="hover = false"></i>
       <span class="hover-text" @mouseover="hover = true" @mouseout="hover = false">菜单</span>
     </button>
+    <el-select class="custom-select" v-model="value" placeholder="请选择小区">
+      <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+      </el-option>
+    </el-select>
     <el-dropdown class="setting-button">
         <i class="el-icon-setting custom-button-icon"></i>
       <el-dropdown-menu style="width: 200px">
@@ -41,6 +66,9 @@ export default {
 </template>
 
 <style scoped>
+.custom-select{
+  margin-left: 1500px;
+}
 .custom-button-icon{
   font-size: 35px;
   color: white;
@@ -50,7 +78,7 @@ export default {
   height: 35px;
   background-color: rgba(69,91,117);
   border-color: transparent;
-  margin-left: 1720px;
+  margin-left: 30px;
   border-radius: 10px;
   transition: background-color 0.3s ease; /* 平滑过渡效果 */
   display: flex;

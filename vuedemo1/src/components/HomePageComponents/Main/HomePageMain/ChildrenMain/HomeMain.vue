@@ -267,7 +267,7 @@ export default {
   border-radius: 20px;
   margin-top: 15px;
   margin-right: 30px;
-  margin-left: 40px;
+  margin-left: 45px;
 }
 .card-style-children2{
   width: 560px;
@@ -282,7 +282,7 @@ export default {
   height: 400px;
   border-radius: 20px;
   margin-top: 30px;
-  margin-left: 40px;
+  margin-left: 45px;
   margin-right: 30px;
 }
 .card-style-children4{
