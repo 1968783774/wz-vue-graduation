@@ -1,4 +1,5 @@
 <script>
+
 export default {
   name: "cellInformation",
   data() {
@@ -19,10 +20,42 @@ export default {
         city: '',
         phone: ''
       },
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
+      value1: ''
     }
   },
 
   methods:{
+    formatter (row) {
+      const zoneDate = new Date(row.createdAt).toJSON()
+      return new Date(+new Date(zoneDate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+    },
     // 获取所有数据
     getAll() {
       this.$axios.get(this.$httpUrl + '/neighbourhood/list', {
@@ -231,8 +264,48 @@ export default {
       }else {
         this.update();
       }
-    }
+    },
 
+    handleDateChange(value) {
+      if (value && value.length === 2) {
+        let startDate = new Date(value[0]);
+        let endDate = new Date(value[1]);
+        let options = {timeZone: 'Asia/Shanghai'};
+        let localStartDateTime = new Intl.DateTimeFormat('zh-CN', options).format(startDate);
+        let localEndDateTime = new Intl.DateTimeFormat('zh-CN', options).format(endDate);
+        // 用户选择了开始日期和结束日期
+        // const startDate = new Date(value[0]);
+        // const endDate = new Date(value[1]);
+        //
+        // // 将时间转换为LocalDateTime格式（假设后端期望的格式为'YYYY-MM-DDTHH:mm:ss'）
+        // const localStartDateTime = startDate.toISOString().slice(0, 19).replace('T', ' ');
+        // const localEndDateTime = endDate.toISOString().slice(0, 19).replace('T', ' ');
+        console.log(localStartDateTime, localEndDateTime)
+        // 用户选择了开始日期和结束日期
+        this.$axios.post('/api/timeData', {
+          startDate: localStartDateTime,
+          endDate: localEndDateTime
+        })
+            .then(res=> {
+              if (res.data.code === 200) {
+                console.log(res.data)
+                this.tableData = res.data.data
+              } else {
+                this.$message({
+                  message: '系统出错，请联系管理员',
+                  type: 'error',
+                  center: true
+                });
+              }
+            })
+            .catch(error=> {
+              this.$message.error({
+                message: error,
+                center: true
+              })
+            });
+      }
+    }
   },
 
   beforeMount() {
@@ -244,6 +317,16 @@ export default {
 <template>
   <el-container style="height: 100%">
     <el-header>
+      <el-date-picker style="margin-right: 30px" @change="handleDateChange"  :default-time="['00:00:00', '23:59:59']"
+      v-model="value1"
+      type="daterange"
+      align="left"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      :picker-options="pickerOptions">
+      </el-date-picker>
       <el-button @click="showForm" type="primary">新增小区</el-button>
       <el-button @click="deleteSelectedIds" type="danger">删除小区</el-button>
       <el-dialog :visible.sync="dialogVisible">
@@ -282,7 +365,6 @@ export default {
                 @selection-change="handleSelectionChange"
                 header-cell-style="background-color: rgba(242,242,242); color: black"
                 stripe
-                max-height="550px"
                 style="width: 100%;border-radius: 10px">
         <el-table-column type="selection"></el-table-column>
         <el-table-column fixed prop="id" label="小区id" width="180"></el-table-column>
@@ -291,6 +373,7 @@ export default {
         <el-table-column prop="floorRage" label="占地面积" width="180"></el-table-column>
         <el-table-column prop="city" label="所在城市" width="200"></el-table-column>
         <el-table-column prop="phone" label="联系方式" width="200"></el-table-column>
+        <el-table-column :formatter="formatter" prop="createdAt" label="创建时间" width="300"></el-table-column>
         <el-table-column fixed="right" label="操作" width="300">
           <template slot-scope="scope">
             <el-button type="text"  @click="handleEdit(scope.row)">修改</el-button>

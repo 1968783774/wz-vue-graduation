@@ -32,14 +32,12 @@ export default {
 </script>
 
 <template>
-  <el-container style="height: 100%">
+  <el-container style="height: 100%;">
 
-    <el-header style="background-color: rgba(69,91,117);height: 60px;display: flex; align-items: center;">
+    <el-header style="height: 6.5%;background-color: rgba(69,91,117); display: flex;align-items: center;">
       <HomeHeader style="display: flex; align-items: center;" @clickBrother="isDrawer"></HomeHeader>
     </el-header>
-
-    <div style="display: flex;height: 100%">
-      <el-main style="background-color: rgba(243,243,243)">
+      <el-main style="background-color: rgba(243,243,243);display: flex;height: 100%">
         <HomeMain></HomeMain>
         <el-drawer
             size='50%'
@@ -51,15 +49,19 @@ export default {
           <HomeMainMenu @selectMenu="selectMenu"></HomeMainMenu>
         </el-drawer>
       </el-main>
-    </div>
 
   </el-container>
 </template>
 
 <style scoped>
+.home-header{
+  display: flex;
+  align-items: center;
+  background-color: rgba(69,91,117);
+}
 ::v-deep .el-drawer {
   background-color: rgba(243,243,243);
-  margin-top: 3.6%;
+  margin-top: 3.3%;
   border-radius: 10px;
   background-clip: padding-box;
   height: 100%;

@@ -32,7 +32,7 @@ export default {
       <span class="hover-text" @mouseover="hover = true" @mouseout="hover = false">菜单</span>
     </button>
     <el-dropdown class="setting-button">
-        <i class="el-icon-setting" style="font-size: 35px;color: white"></i>
+        <i class="el-icon-setting custom-button-icon"></i>
       <el-dropdown-menu style="width: 200px">
         <el-button style="border-color: transparent;width: 100%" icon="el-icon-switch-button" @click="open">退出登录</el-button>
       </el-dropdown-menu>
@@ -41,6 +41,10 @@ export default {
 </template>
 
 <style scoped>
+.custom-button-icon{
+  font-size: 35px;
+  color: white;
+}
 .setting-button{
   width: 35px;
   height: 35px;

@@ -133,4 +133,8 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+   /* 使用深度选择器来覆盖子组件的样式 */
+ ::v-deep .el-dialog {
+   border-radius: 10px; /* 设置你想要的圆角大小 */
+ }
 </style>
