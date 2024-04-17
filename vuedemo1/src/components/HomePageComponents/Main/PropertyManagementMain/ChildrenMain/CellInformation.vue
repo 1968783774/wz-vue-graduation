@@ -309,6 +309,7 @@ export default {
   },
 
   beforeMount() {
+    this.$store.commit("setTypeMenu",{menuType:"property"})
     this.getAll();
   },
 }

@@ -11,12 +11,12 @@ export default {
     return {
       drawer: false,
       direction: 'ltr',
-      asideActiveIndex: '1', // 默认激活的菜单项索引
+      asideActiveIndex: '', // 默认激活的菜单项索引
     }
   },
   methods:{
-    selectMenu(view,index) {
-      // 更新 asideActiveIndex 和 currentView
+    selectMenu(index,typeMenu) {
+      this.$store.commit("setTypeMenu",{menuType:typeMenu})
       if (index!==''){
         this.asideActiveIndex = index
       }

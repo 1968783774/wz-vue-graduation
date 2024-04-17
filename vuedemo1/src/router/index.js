@@ -39,6 +39,32 @@ const routes = [
             }
         ]
     },
+    {
+        path: '/park',
+        component:PropertyManagement,
+        children:[
+            {
+                path:'management',
+                component:PropertyInforMation
+            },
+            {
+                path: 'stall',
+                component: CellInformation
+            },
+            {
+                path: 'car',
+                component: CellInformation
+            },
+            {
+                path: 'present',
+                component: CellInformation
+            },
+            {
+                path: 'record',
+                component: CellInformation
+            }
+        ]
+    },
 
 ]
 const router = new VueRouter({

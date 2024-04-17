@@ -6,9 +6,9 @@ export default {
       this.$emit('selectMenu', 'home');
       this.$router.push("/home",() => {})
     },
-    selectMenuItem(itemIndex) {
+    selectMenuItem(itemIndex,typeMenu) {
       this.$router.push(itemIndex,() => {})
-      this.$emit('selectMenu', 'property',itemIndex);
+      this.$emit('selectMenu',itemIndex,typeMenu);
     }
   }
 }
@@ -21,15 +21,15 @@ export default {
     <el-card  class="drawer-card-style">
       <div style="display: flex;flex-direction: row;">
         <div>
-          <el-button class="property-button" @click="selectMenuItem('/property/1')">
+          <el-button class="property-button" @click="selectMenuItem('/property/1','property')">
             <i class="el-icon-s-platform" style="margin-right: 5px;"></i>物业管理</el-button>
         </div>
         <el-divider direction="vertical"></el-divider>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: flex-start">
-          <el-button class="menu-button" @click="selectMenuItem('/property/1')">物业信息</el-button>
-          <el-button class="menu-button" @click="selectMenuItem('/property/2')">小区信息</el-button>
-          <el-button class="menu-button" @click="selectMenuItem('/property/3')">岗位管理</el-button>
-          <el-button class="menu-button" @click="selectMenuItem('/property/4')">员工管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/property/1','property')">物业信息</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/property/2','property')">小区信息</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/property/3','property')">岗位管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/property/4','property')">员工管理</el-button>
         </div>
       </div>
     </el-card>
@@ -51,16 +51,16 @@ export default {
     <el-card  class="drawer-card-style">
       <div style="display: flex;flex-direction: row;">
         <div>
-          <el-button class="property-button" @click="selectMenuItem('/property/1')">
+          <el-button class="property-button" @click="selectMenuItem('/park/management','park')">
             <i class="el-icon-truck" style="margin-right: 5px;"></i>停车场管理</el-button>
         </div>
         <el-divider direction="vertical"></el-divider>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: flex-start">
-          <el-button class="menu-button">停车场管理</el-button>
-          <el-button class="menu-button">车位管理</el-button>
-          <el-button class="menu-button">车辆管理</el-button>
-          <el-button class="menu-button">在场车辆</el-button>
-          <el-button class="menu-button">停车记录</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/park/management','park')">停车场管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/park/stall','park')">车位管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/park/car','park')">车辆管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/park/present','park')">在场车辆</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/park/record','park')">停车记录</el-button>
         </div>
       </div>
     </el-card>

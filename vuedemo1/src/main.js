@@ -4,6 +4,7 @@ import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import router from '@/router';
 import axios from "axios";
+import store from './store'
 // 引入iconfont图标
 import "../src/assets/icon/iconfont.css"
 import * as echarts from 'echarts';
@@ -37,5 +38,6 @@ Vue.prototype.$echarts = echarts;
 
 new Vue({
   router,
+    store,
   render: h => h(App),
 }).$mount('#app')

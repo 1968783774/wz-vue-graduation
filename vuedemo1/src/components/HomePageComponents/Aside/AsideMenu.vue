@@ -11,9 +11,13 @@ export default {
     return {
     };
   },
+  computed: {
+    getTypeMenu(){
+      return this.$store.getters.getTypeMenu;
+    }
+  },
   methods: {
-
-  }
+  },
 }
 </script>
 
@@ -23,6 +27,7 @@ export default {
         class="wzz"
         router="router"
         :default-active="activeIndex"
+        v-if="getTypeMenu === 'property'"
         >
       <el-menu-item index="/property/1" style="color: rgba(140,140,140)">
         <i class="el-icon-menu"></i>
@@ -39,6 +44,34 @@ export default {
       <el-menu-item index="/property/4" style="color: rgba(140,140,140)">
         <i class="el-icon-setting"></i>
         <span slot="title">员工管理</span>
+      </el-menu-item>
+    </el-menu>
+
+    <el-menu
+        class="wzz"
+        router="router"
+        :default-active="activeIndex"
+        v-if="getTypeMenu === 'park'"
+    >
+      <el-menu-item index="/park/management" style="color: rgba(140,140,140)">
+        <i class="el-icon-menu"></i>
+        <span slot="title">停车场管理</span>
+      </el-menu-item>
+      <el-menu-item index="/park/stall" style="color: rgba(140,140,140)">
+        <i class="el-icon-menu"></i>
+        <span slot="title">车位管理</span>
+      </el-menu-item>
+      <el-menu-item index="/park/car" style="color: rgba(140,140,140)">
+        <i class="el-icon-setting"></i>
+        <span slot="title">车辆管理</span>
+      </el-menu-item>
+      <el-menu-item index="/park/present" style="color: rgba(140,140,140)">
+        <i class="el-icon-setting"></i>
+        <span slot="title">在场车辆</span>
+      </el-menu-item>
+      <el-menu-item index="/park/record" style="color: rgba(140,140,140)">
+        <i class="el-icon-setting"></i>
+        <span slot="title">停车记录</span>
       </el-menu-item>
     </el-menu>
   </div>
