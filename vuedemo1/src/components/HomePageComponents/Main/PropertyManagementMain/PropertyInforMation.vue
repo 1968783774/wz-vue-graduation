@@ -82,7 +82,6 @@ export default {
   beforeMount() {
     this.info();
     this.$store.commit("setTypeMenu",{menuType:"property"})
-    console.log(this.$store.state.menuType)
   }
 }
 </script>

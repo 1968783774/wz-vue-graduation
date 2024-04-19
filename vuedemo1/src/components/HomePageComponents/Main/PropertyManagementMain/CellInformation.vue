@@ -268,21 +268,9 @@ export default {
 
     handleDateChange(value) {
       if (value && value.length === 2) {
-        let startDate = new Date(value[0]);
-        let endDate = new Date(value[1]);
-        let options = {timeZone: 'Asia/Shanghai'};
-        let localStartDateTime = new Intl.DateTimeFormat('zh-CN', options).format(startDate);
-        let localEndDateTime = new Intl.DateTimeFormat('zh-CN', options).format(endDate);
-        // 用户选择了开始日期和结束日期
-        // const startDate = new Date(value[0]);
-        // const endDate = new Date(value[1]);
-        //
-        // // 将时间转换为LocalDateTime格式（假设后端期望的格式为'YYYY-MM-DDTHH:mm:ss'）
-        // const localStartDateTime = startDate.toISOString().slice(0, 19).replace('T', ' ');
-        // const localEndDateTime = endDate.toISOString().slice(0, 19).replace('T', ' ');
-        console.log(localStartDateTime, localEndDateTime)
-        // 用户选择了开始日期和结束日期
-        this.$axios.post('/api/timeData', {
+        let localStartDateTime = value[0]
+        let localEndDateTime = value[1]
+        this.$axios.post(this.$httpUrl + '/neighbourhood/dateRange', {
           startDate: localStartDateTime,
           endDate: localEndDateTime
         })
@@ -318,7 +306,7 @@ export default {
 <template>
   <el-container style="height: 100%">
     <el-header>
-      <el-date-picker style="margin-right: 30px" @change="handleDateChange"  :default-time="['00:00:00', '23:59:59']"
+      <el-date-picker style="margin-right: 30px" @change="handleDateChange"  :default-time="['00:00:00', '23:59:59']"  value-format="yyyy-MM-dd HH:mm:ss"
       v-model="value1"
       type="daterange"
       align="left"

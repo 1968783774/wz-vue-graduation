@@ -1,10 +1,17 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import LoginInterface from "@/components/LoginComponents/LoginInterface.vue";
-import CellInformation from "@/components/HomePageComponents/Main/PropertyManagementMain/ChildrenMain/CellInformation.vue";
+import CellInformation from "@/components/HomePageComponents/Main/PropertyManagementMain/CellInformation.vue";
 import HomePage from "@/components/HomePageComponents/Main/HomePageMain/HomePage.vue";
-import PropertyInforMation from "@/components/HomePageComponents/Main/PropertyManagementMain/ChildrenMain/PropertyInforMation.vue";
-import PropertyManagement from "@/components/HomePageComponents/Main/PropertyManagementMain/PropertyManagement.vue";
+import PropertyInforMation from "@/components/HomePageComponents/Main/PropertyManagementMain/PropertyInforMation.vue";
+import PropertyManagement from "@/components/HomePageComponents/Main/ParentMain.vue";
+import PositionManagement from "@/components/HomePageComponents/Main/PropertyManagementMain/PositionManagement.vue";
+import StaffManagement from "@/components/HomePageComponents/Main/PropertyManagementMain/StaffManagement.vue";
+import ParkingRecord from "@/components/HomePageComponents/Main/ParkManagementMain/ParkingRecord.vue";
+import ParkManagement from "@/components/HomePageComponents/Main/ParkManagementMain/ParkManagement.vue";
+import StallManagement from "@/components/HomePageComponents/Main/ParkManagementMain/StallManagement.vue";
+import CarManagement from "@/components/HomePageComponents/Main/ParkManagementMain/CarManagement.vue";
+import VehiclesPresent from "@/components/HomePageComponents/Main/ParkManagementMain/VehiclesPresent.vue";
 
 Vue.use(VueRouter)
 
@@ -31,11 +38,11 @@ const routes = [
             },
             {
                 path: '3',
-                component: CellInformation
+                component: PositionManagement
             },
             {
                 path: '4',
-                component: CellInformation
+                component: StaffManagement
             }
         ]
     },
@@ -45,23 +52,23 @@ const routes = [
         children:[
             {
                 path:'management',
-                component:PropertyInforMation
+                component:ParkManagement
             },
             {
                 path: 'stall',
-                component: CellInformation
+                component: StallManagement
             },
             {
                 path: 'car',
-                component: CellInformation
+                component: CarManagement
             },
             {
                 path: 'present',
-                component: CellInformation
+                component: VehiclesPresent
             },
             {
                 path: 'record',
-                component: CellInformation
+                component: ParkingRecord
             }
         ]
     },

@@ -24,7 +24,6 @@ export default new Vuex.Store({
             label: '北京烤鸭小区'
         }],
         menuType:''
-
     },
     //准备getters——用于将state中的数据进行加工
     getters: {
