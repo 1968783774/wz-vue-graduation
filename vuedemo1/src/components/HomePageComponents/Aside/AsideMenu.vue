@@ -80,6 +80,6 @@ export default {
 <style scoped>
 
 .wzz{
-  height: 100vh;
+  border:0!important;
 }
 </style>

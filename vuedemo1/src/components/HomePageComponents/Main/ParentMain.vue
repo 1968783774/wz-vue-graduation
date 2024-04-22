@@ -42,7 +42,7 @@ export default {
       <el-aside style="width: 10%">
         <AsideMenu  :active-index="asideActiveIndex"></AsideMenu>
       </el-aside>
-      <el-main style="background-color: white">
+      <el-main style="background-color: rgba(243,243,243)">
         <router-view></router-view>
         <el-drawer
             size='50%'
