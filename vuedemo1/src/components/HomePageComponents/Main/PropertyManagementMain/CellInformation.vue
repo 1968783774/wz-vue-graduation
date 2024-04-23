@@ -306,7 +306,7 @@ export default {
 <template>
   <el-container style="height: 100%">
     <el-header>
-      <el-date-picker style="margin-right: 30px" @change="handleDateChange"  :default-time="['00:00:00', '23:59:59']"  value-format="yyyy-MM-dd HH:mm:ss"
+      <el-date-picker class="date-picker-style" @change="handleDateChange"  :default-time="['00:00:00', '23:59:59']"  value-format="yyyy-MM-dd HH:mm:ss"
       v-model="value1"
       type="daterange"
       align="left"
@@ -316,8 +316,8 @@ export default {
       end-placeholder="结束日期"
       :picker-options="pickerOptions">
       </el-date-picker>
-      <el-button @click="showForm" type="primary">新增小区</el-button>
-      <el-button @click="deleteSelectedIds" type="danger">删除小区</el-button>
+      <el-button plain round @click="showForm" type="primary">新增小区</el-button>
+      <el-button plain round @click="deleteSelectedIds" type="danger">删除小区</el-button>
       <el-dialog :visible.sync="dialogVisible">
         <span slot="title" style="font-size: 20px;margin-bottom: 10px">{{dialogTitle}}</span>
         <el-form label-width="80px">
@@ -364,10 +364,10 @@ export default {
           <el-table-column prop="city" label="所在城市" width="200"></el-table-column>
           <el-table-column prop="phone" label="联系方式" width="200"></el-table-column>
           <el-table-column :formatter="formatter" prop="createdAt" label="创建时间" width="300"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="300">
+          <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
-              <el-button type="text"  @click="handleEdit(scope.row)">修改</el-button>
-              <el-button type="text"  @click="handleDelete(scope.row.id)">删除</el-button>
+              <el-button type="text" icon="el-icon-edit" circle @click="handleEdit(scope.row)"></el-button>
+              <el-button type="text" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"></el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -391,11 +391,18 @@ export default {
 </template>
 
 <style scoped>
+.date-picker-style{
+  margin-right: 30px;
+  width:400px
+}
 .cellMain{
   height: 600px;
 }
 .cellMain-card{
-  width: 1650px;margin-left: 18px;height: 750px
+  width: 1650px;
+  margin-left: 18px;
+  height: 750px;
+  border-radius:15px
 }
 .separator {
   height: 10px;
