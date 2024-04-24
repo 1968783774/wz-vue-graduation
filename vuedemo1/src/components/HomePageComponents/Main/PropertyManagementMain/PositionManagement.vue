@@ -5,44 +5,13 @@ export default {
     return{
       options: [],
       value: "",
-      formData: {
+      ptFormData: {
         id: null,
         name: '',
-        neighbourhoodId: '',
-        total:'',
+        neighbourhoodId: null,
+        total:null,
       },
-      tableData: [
-        {
-          id: 1,
-          name: "岗位1",
-          neighbourhoodName: "小区1",
-          status: 1,
-          total: 100,
-          occupyCount: 20,
-          noOccupyCount: 80,
-          createdAt: "2021-01-01 12:00:00"
-        },
-        {
-          id: 2,
-          name: "岗位2",
-          neighbourhoodName: "小区1",
-          status: 1,
-          total: 100,
-          occupyCount: 20,
-          noOccupyCount: 80,
-          createdAt: "2021-01-01 12:00:00"
-        },
-        {
-          id: 3,
-          name: "岗位3",
-          neighbourhoodName: "小区1",
-          status: 1,
-          total: 100,
-          occupyCount: 20,
-          noOccupyCount: 80,
-          createdAt: "2021-01-01 12:00:00"
-        },
-      ],
+      tableData:[],
       positionChart1: null,
       dialogTitle: '',
       dialogVisible: false,
@@ -57,6 +26,29 @@ export default {
     }
   },
   methods: {
+    // 获取所有数据
+    getAll() {
+      this.$axios.get(this.$httpUrl + '/position/list', {}
+      ).then(res => {
+        if (res.data.code === 200) {
+          console.log(res.data)
+          this.tableData = res.data.data
+          this.initChart();
+        } else {
+          this.$message({
+            message: '系统出错，请联系管理员',
+            type: 'error',
+            center: true
+          });
+        }
+      }).catch(error => {
+        this.$message({
+          message: error,
+          type: 'error',
+          center: true
+        });
+      })
+    },
     initChart() {
       this.positionChart1 = this.$echarts.init(this.$refs.positionChart1);
       this.renderPieChart();
@@ -123,7 +115,7 @@ export default {
 
     save() {
       this.isSaving = true; // 禁用确定按钮
-      this.$axios.post(this.$httpUrl + '/position/add', [this.formData])
+      this.$axios.post(this.$httpUrl + '/position/add', this.ptFormData)
           .then(res => {
             if (res.data.code === 200&&res.data.data==='添加成功') {
               this.$message({
@@ -132,16 +124,21 @@ export default {
                 center: true
               });
             }
+           else if (res.data.code === 200 && res.data.data === '添加失败') {
+                this.$message({
+                message:res.data.data,
+                type: 'error'
+                });}
             else {
               this.$message({
-                message: '添加失败',
+                message: res.data.message,
                 type: 'error',
                 center: true
               });
             }
             this.dialogVisible = false;
             this.resetForm();
-            this.getAll();
+            this.getAll()
           })
           .catch(error => {
             console.log(error);
@@ -160,16 +157,18 @@ export default {
     },
 
     resetForm() {
-      this.formData = {
-        neighbourhoodName: '',
+      this.ptFormData = {
+        id: null,
         name: '',
-        total: null,
+        neighbourhoodId: null,
+        total:null,
       };
     },
   },
   mounted() {
     this.getNeighbourhoodNameList();
-    this.initChart();
+    this.getAll();
+
   },
   beforeMount() {
     this.$store.commit("setTypeMenu",{menuType:"property"})
@@ -183,13 +182,20 @@ export default {
       <span slot="title" style="font-size: 20px;margin-bottom: 10px">{{dialogTitle}}</span>
       <el-form label-width="80px">
         <el-form-item label="岗位名称">
-          <el-input v-model="formData.name"></el-input>
+          <el-input v-model="ptFormData.name"></el-input>
         </el-form-item>
         <el-form-item label="所属小区">
-          <el-input v-model="formData.neighbourhoodName"></el-input>
+          <el-select v-model="ptFormData.neighbourhoodId">
+            <el-option
+                v-for="item in this.options"
+                :key="item.id"
+                :label="item.neighbourhoodName"
+                :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="岗位需求人数">
-          <el-input v-model="formData.total"></el-input>
+          <el-input v-model="ptFormData.total"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button  :loading="isSaving" @click="saveOrUpdate">确定</el-button>
