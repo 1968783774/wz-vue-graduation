@@ -7,22 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     // 数据,相当于data
     state: {
-        options: [{
-            value: '选项1',
-            label: '黄金糕小区'
-        }, {
-            value: '选项2',
-            label: '双皮奶小区'
-        }, {
-            value: '选项3',
-            label: '蚵仔煎小区'
-        }, {
-            value: '选项4',
-            label: '龙须面小区'
-        }, {
-            value: '选项5',
-            label: '北京烤鸭小区'
-        }],
+        options: [],
         menuType:''
     },
     //准备getters——用于将state中的数据进行加工

@@ -3,7 +3,14 @@ export default {
   name: "PositionManagement",
   data() {
     return{
+      options: [],
       value: "",
+      formData: {
+        id: null,
+        name: '',
+        neighbourhoodId: '',
+        total:'',
+      },
       tableData: [
         {
           id: 1,
@@ -15,8 +22,38 @@ export default {
           noOccupyCount: 80,
           createdAt: "2021-01-01 12:00:00"
         },
+        {
+          id: 2,
+          name: "岗位2",
+          neighbourhoodName: "小区1",
+          status: 1,
+          total: 100,
+          occupyCount: 20,
+          noOccupyCount: 80,
+          createdAt: "2021-01-01 12:00:00"
+        },
+        {
+          id: 3,
+          name: "岗位3",
+          neighbourhoodName: "小区1",
+          status: 1,
+          total: 100,
+          occupyCount: 20,
+          noOccupyCount: 80,
+          createdAt: "2021-01-01 12:00:00"
+        },
       ],
       positionChart1: null,
+      dialogTitle: '',
+      dialogVisible: false,
+      isSaving: false,
+      sourceData:[
+        { value: 335, name: '直接访问' },
+        { value: 310, name: '邮件营销' },
+        { value: 234, name: '联盟广告' },
+        { value: 135, name: '视频广告' },
+        { value: 1548, name: '搜索引擎' }
+      ]
     }
   },
   methods: {
@@ -25,28 +62,113 @@ export default {
       this.renderPieChart();
     },
     renderPieChart() {
-      const option1 = {
-        xAxis: {
-          data: ['A', 'B', 'C', 'D', 'E']
+      const option1 =  {
+        title: {
+          text: '小区岗位详情',
+          left: 'center'
         },
-        yAxis: {},
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+          data: this.tableData.map(({ name, total }) => ({ name, value: total })).map(item => item.name)
+        },
         series: [
           {
-            data: [10, 22, 28, 43, 49],
-            type: 'bar',
-            stack: 'x'
-          },
-          {
-            data: [5, 4, 3, 5, 10],
-            type: 'bar',
-            stack: 'x'
+            name: '访问来源',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: this.tableData.map(({ name, total }) => ({ name, value: total })),
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
           }
         ]
       };
       this.positionChart1.setOption(option1);
-    }
+    },
+    getNeighbourhoodNameList() {
+      this.$axios.get(this.$httpUrl +'/neighbourhood/nameList')
+          .then(res => {
+            if (res.data.code === 200) {
+             this.options = res.data.data;
+              console.log(res.data.data)
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
+    },
+    showForm() {
+      this.dialogTitle = '新增岗位';
+      this.dialogVisible = true;
+      this.resetForm();
+    },
+
+    saveOrUpdate() {
+      if (this.dialogTitle === '新增岗位'){
+        this.save();
+      }else {
+        this.update();
+      }
+    },
+
+    save() {
+      this.isSaving = true; // 禁用确定按钮
+      this.$axios.post(this.$httpUrl + '/position/add', [this.formData])
+          .then(res => {
+            if (res.data.code === 200&&res.data.data==='添加成功') {
+              this.$message({
+                message: res.data.data,
+                type:'success',
+                center: true
+              });
+            }
+            else {
+              this.$message({
+                message: '添加失败',
+                type: 'error',
+                center: true
+              });
+            }
+            this.dialogVisible = false;
+            this.resetForm();
+            this.getAll();
+          })
+          .catch(error => {
+            console.log(error);
+            this.$message({
+              message: error.message,
+              type: 'error',
+              center: true
+            });
+          }).finally(() => {
+        this.isSaving = false; // 启用确定按钮
+      });
+    },
+    cancel() {
+      this.dialogVisible = false;
+      this.resetForm();
+    },
+
+    resetForm() {
+      this.formData = {
+        neighbourhoodName: '',
+        name: '',
+        total: null,
+      };
+    },
   },
   mounted() {
+    this.getNeighbourhoodNameList();
     this.initChart();
   },
   beforeMount() {
@@ -56,53 +178,71 @@ export default {
 </script>
 
 <template>
-   <div>
-      <div style="margin-bottom: 20px">
+  <div>
+    <el-dialog :visible.sync="dialogVisible">
+      <span slot="title" style="font-size: 20px;margin-bottom: 10px">{{dialogTitle}}</span>
+      <el-form label-width="80px">
+        <el-form-item label="岗位名称">
+          <el-input v-model="formData.name"></el-input>
+        </el-form-item>
+        <el-form-item label="所属小区">
+          <el-input v-model="formData.neighbourhoodName"></el-input>
+        </el-form-item>
+        <el-form-item label="岗位需求人数">
+          <el-input v-model="formData.total"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button  :loading="isSaving" @click="saveOrUpdate">确定</el-button>
+          <el-button @click="cancel">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <div style="margin-bottom: 20px">
 
-        <el-select class="position-select" v-model="value" clearable placeholder="请选择小区">
-          <el-option
-              v-for="item in this.$store.state.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-          </el-option>
-        </el-select>
-        <el-button plain round  type="primary">新增岗位</el-button>
-        <el-button plain round  type="warning">删除岗位</el-button>
-        <el-button plain round  type="success">启用</el-button>
-        <el-button plain round  type="danger">禁用</el-button>
-      </div>
-     <div class="separator"></div>
-     <div style="display: flex;flex-wrap: wrap">
-       <el-card class="position-card2">
-         <el-table :data="tableData"
-                   @selection-change="handleSelectionChange"
-                   header-cell-style="background-color: rgba(242,242,242); color: black"
-                   stripe
-                   size="small"
-                   style="width: 100%;border-radius: 10px">
-           <el-table-column type="selection"></el-table-column>
-           <el-table-column fixed prop="id" label="岗位id" width="100"></el-table-column>
-           <el-table-column prop="name" label="岗位名称" width="120"></el-table-column>
-           <el-table-column prop="neighbourhoodName" label="所属小区" width="120"></el-table-column>
-           <el-table-column prop="status" label="状态" width="100"></el-table-column>
-           <el-table-column prop="total" label="总数" width="100"></el-table-column>
-           <el-table-column prop="occupyCount" label="已有人数" width="100"></el-table-column>
-           <el-table-column prop="noOccupyCount" label="剩余人数" width="100"></el-table-column>
-           <el-table-column prop="createdAt" label="创建时间" width="200"></el-table-column>
-           <el-table-column fixed="right" label="操作" width="120">
-             <template slot-scope="scope">
-               <el-button type="text" icon="el-icon-edit" circle @click="handleEdit(scope.row)"></el-button>
-               <el-button type="text" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"></el-button>
-             </template>
-           </el-table-column>
-         </el-table>
-       </el-card>
-       <el-card class="position-card3">
-         <div ref="positionChart1" style="height:350px;width:500px"></div>
-       </el-card>
-     </div>
-   </div>
+      <el-select class="position-select" v-model="value" clearable placeholder="请选择小区">
+        <el-option
+            v-for="item in this.options"
+            :key="item.id"
+            :label="item.neighbourhoodName"
+            :value="item.id">
+        </el-option>
+      </el-select>
+      <el-button plain round type="primary" @click="showForm">新增岗位</el-button>
+      <el-button plain round type="warning">删除岗位</el-button>
+      <el-button plain round type="success">启用</el-button>
+      <el-button plain round type="danger">禁用</el-button>
+    </div>
+    <div class="separator"></div>
+    <div style="display: flex;flex-wrap: wrap">
+      <el-card class="position-card2">
+        <el-table :data="tableData"
+                  @selection-change="handleSelectionChange"
+                  header-cell-style="background-color: rgba(242,242,242); color: black"
+                  stripe
+                  size="small"
+                  style="width: 100%;border-radius: 10px">
+          <el-table-column type="selection"></el-table-column>
+          <el-table-column fixed prop="id" label="岗位id" width="100"></el-table-column>
+          <el-table-column prop="name" label="岗位名称" width="120"></el-table-column>
+          <el-table-column prop="neighbourhoodName" label="所属小区" width="120"></el-table-column>
+          <el-table-column prop="status" label="状态" width="100"></el-table-column>
+          <el-table-column prop="total" label="总数" width="100"></el-table-column>
+          <el-table-column prop="occupyCount" label="已有人数" width="100"></el-table-column>
+          <el-table-column prop="noOccupyCount" label="剩余人数" width="100"></el-table-column>
+          <el-table-column prop="createdAt" label="创建时间" width="200"></el-table-column>
+          <el-table-column fixed="right" label="操作" width="120">
+            <template slot-scope="scope">
+              <el-button type="text" icon="el-icon-edit" circle @click="handleEdit(scope.row)"></el-button>
+              <el-button type="text" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
+      <el-card class="position-card3">
+        <div ref="positionChart1" style="height:700px;width:560px;margin-top:35px"></div>
+      </el-card>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -110,6 +250,7 @@ export default {
   margin-left: 20px;
   margin-right: 20px;
 }
+
 .separator {
   height: 10px;
   margin-left: 20px;
