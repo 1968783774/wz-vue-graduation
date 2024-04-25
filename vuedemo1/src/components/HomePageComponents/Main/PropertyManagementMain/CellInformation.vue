@@ -52,33 +52,28 @@ export default {
   },
 
   methods:{
-    formatter (row) {
-      const zoneDate = new Date(row.createdAt).toJSON()
-      return new Date(+new Date(zoneDate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
-    },
+
     // 获取所有数据
-    getAll() {
-      this.$axios.get(this.$httpUrl + '/neighbourhood/list', {
-            params: {}
-          }
-      ).then(res => {
-        if (res.data.code === 200) {
-          console.log(res.data)
-          this.tableData = res.data.data
-        } else {
-          this.$message({
-            message: '系统出错，请联系管理员',
-            type: 'error',
-            center: true
-          });
-        }
-      }).catch(error => {
-        this.$message({
-          message: error,
-          type: 'error',
-          center: true
-        });
-      })
+    getAllData() {
+      this.$commonMethods.getAll(this,this.$httpUrl+'/neighbourhood/list')
+    },
+
+    // 保存数据
+    save() {
+      this.$commonMethods.save(this,this.$httpUrl+'/neighbourhood/add')
+    },
+
+    deleteById(id) {
+      this.$commonMethods.handleDelete(this,id,this.$httpUrl+'/neighbourhood/delete')
+    },
+
+    // 批量删除
+    deleteSelectedIds() {
+      this.$commonMethods.deleteSelectedIds(this,this.$httpUrl+'/neighbourhood/delete')
+    },
+
+    update() {
+      this.$commonMethods.update(this,this.$httpUrl+'/neighbourhood/update')
     },
 
     showForm() {
@@ -87,39 +82,6 @@ export default {
       this.resetForm();
     },
 
-    // 保存数据
-    save() {
-      this.isSaving = true; // 禁用确定按钮
-      this.$axios.post(this.$httpUrl + '/neighbourhood/add', [this.formData])
-          .then(res => {
-            if (res.data.code === 200&&res.data.data==='添加成功') {
-              this.$message({
-                message: res.data.data,
-                type:'success',
-                center: true
-              });
-            }
-            else {
-              this.$message({
-                message: '添加失败',
-                type: 'error',
-                center: true
-              });
-            }
-            this.dialogVisible = false;
-            this.resetForm();
-            this.getAll();
-          })
-          .catch(error => {
-            this.$message({
-              message: error,
-              type: 'error',
-              center: true
-            });
-          }).finally(() => {
-            this.isSaving = false; // 启用确定按钮
-      });
-    },
 
     cancel() {
       this.dialogVisible = false;
@@ -136,87 +98,12 @@ export default {
       };
     },
 
-    // 单行数据删除
-    handleDelete(id) {
-      this.$confirm('确认删除该条记录吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-          .then(() => {
-            this.$axios.post(this.$httpUrl + '/neighbourhood/delete', [id])
-                .then(res => {
-                  if (res.data.code === 200 && res.data.data === '删除成功') {
-                    this.$message({
-                      message: res.data.data,
-                      type: 'success',
-                      center: true
-                    });
-                    this.getAll();
-                  } else {
-                    console.log(res.data.data)
-                    this.$message({
-                      message: '删除失败',
-                      type: 'error',
-                      center: true
-                    });
-                  }
-                  this.getAll();
-                })
-                .catch(error => {
-                  this.$message({
-                    message: error,
-                    type: 'error',
-                    center: true
-                  });
-                });
-          })
-          .catch(() => {
-            this.$message({
-              type: 'warning',
-              message: '已取消删除',
-              center: true,
-            });
-          });
+
+    formatter (row) {
+      const zoneDate = new Date(row.createdAt).toJSON()
+      return new Date(+new Date(zoneDate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
     },
 
-    // 批量删除
-    deleteSelectedIds() {
-      if (this.selectedRows.length === 0) {
-        this.$message({
-          message: '请至少选择一项',
-          type: 'warning',
-          center: true
-        });
-        return; // 防止继续执行删除操作
-      }
-      this.$axios.post(this.$httpUrl + '/neighbourhood/delete', this.selectedRows )
-          .then(res => {
-            if (res.data.code === 200&&res.data.data==='删除成功') {
-              this.$message({
-                message: res.data.data,
-                type:'success',
-                center: true
-              });
-              this.getAll();
-            } else {
-              console.log(res.data.data)
-              this.$message({
-                message: '删除失败',
-                type: 'error',
-                center: true
-              });
-            }
-            this.getAll();
-          })
-          .catch(error => {
-            this.$message({
-              message: error,
-              type: 'error',
-              center: true
-            });
-          });
-    },
     //收集选中的行的小区id
     handleSelectionChange(selectedItems) {
       this.selectedRows = selectedItems.map(item => item.id);
@@ -226,37 +113,7 @@ export default {
       this.dialogTitle = '修改小区信息';
       this.formData = { ...row };
     },
-    update() {
-      this.isSaving = true; // 禁用确定按钮
-      this.$axios.post(this.$httpUrl + '/neighbourhood/update', this.formData)
-          .then(res => {
-            if (res.data.code === 200 && res.data.data === '更新成功') {
-              this.$message({
-                message: res.data.data,
-                type: 'success',
-                center: true
-              })
-            } else {
-              this.$message({
-                message: '更新失败',
-                type: 'error',
-                center: true
-              })
-            }
-            this.dialogVisible = false;
-            this.resetForm();
-            this.getAll();
-          })
-          .catch(error => {
-            this.$message({
-              message: error,
-              type: 'error',
-              center: true
-            });
-          }).finally(() => {
-        this.isSaving = false; // 启用确定按钮
-      });
-    },
+
 
     saveOrUpdate() {
       if (this.dialogTitle === '新增小区'){
@@ -302,7 +159,7 @@ export default {
 
   beforeMount() {
     this.$store.commit("setTypeMenu",{menuType:"property"})
-    this.getAll();
+    this.getAllData();
   },
 }
 </script>
@@ -371,7 +228,7 @@ export default {
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="text" icon="el-icon-edit" circle @click="handleEdit(scope.row)"></el-button>
-              <el-button type="text" icon="el-icon-delete" circle @click="handleDelete(scope.row.id)"></el-button>
+              <el-button type="text" icon="el-icon-delete" circle @click="deleteById(scope.row.id)"></el-button>
             </template>
           </el-table-column>
         </el-table>

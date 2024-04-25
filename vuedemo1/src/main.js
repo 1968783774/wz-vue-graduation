@@ -5,6 +5,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import router from '@/router';
 import axios from "axios";
 import store from './store'
+import commonMethods from './store/commonMethods'
 // 引入iconfont图标
 import "../src/assets/icon/iconfont.css"
 import * as echarts from 'echarts';
@@ -35,6 +36,7 @@ Vue.config.productionTip = false
 Vue.prototype.$httpUrl = 'http://localhost:8888'
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$commonMethods = commonMethods;
 
 new Vue({
   router,
