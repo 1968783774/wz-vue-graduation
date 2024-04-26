@@ -5,6 +5,7 @@ export default {
   data() {
     return{
       options: [],
+      neighbourhoodName:null,
       selectedRows: [],
       value: null,
       formData: {
@@ -20,6 +21,22 @@ export default {
       isSaving: false,
     }
   },
+
+  computed: {
+    pieChartTitle() {
+      if(this.neighbourhoodName===null){
+        return '小区岗位详情'
+      }
+      return this.neighbourhoodName+'小区岗位详情'
+    },
+    chartShow(){
+      if(this.value===null){
+        return []
+      }
+      return this.tableData
+    }
+  },
+
   methods: {
     // 单个删除
     deleteById(id) {
@@ -27,6 +44,8 @@ export default {
     },
     // 获取所有数据
     getAllData() {
+      this.value = null;
+      this.neighbourhoodName = null;
       this.$commonMethods.getAll(this,this.$httpUrl+'/position/list')
     },
     save() {
@@ -46,9 +65,10 @@ export default {
       this.renderPieChart();
     },
     renderPieChart() {
+
       const option1 =  {
         title: {
-          text: '小区岗位详情',
+          text:this.pieChartTitle,
           left: 'center'
         },
         tooltip: {
@@ -58,7 +78,7 @@ export default {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: this.tableData.map(({ name, total }) => ({ name, value: total })).map(item => item.name)
+          data: this.chartShow.map(({ name, total }) => ({ name, value: total })).map(item => item.name)
         },
         series: [
           {
@@ -66,7 +86,7 @@ export default {
             type: 'pie',
             radius: '55%',
             center: ['50%', '60%'],
-            data: this.tableData.map(({ name, total }) => ({ name, value: total })),
+            data: this.chartShow.map(({ name, total }) => ({ name, value: total })),
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -105,6 +125,11 @@ export default {
       }
     },
 
+    formatter (row) {
+      const zoneDate = new Date(row.createdAt).toJSON()
+      return new Date(+new Date(zoneDate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+    },
+
     handleSelectionChange(selectedItems) {
       this.selectedRows = selectedItems.map(item => item.id);
     },
@@ -119,6 +144,10 @@ export default {
       if (this.value === null||this.value.length === 0) {
         return
       }
+      // 通过value获取选中的小区对象
+      let selectedNeighbourhood = this.options.find(item => item.id === this.value);
+      // 将选中的小区的neighbourhoodName保存在name变量中
+      this.neighbourhoodName = selectedNeighbourhood ? selectedNeighbourhood.neighbourhoodName : '';
       console.log(this.value)
       this.$commonMethods.getDataByParams(this,this.$httpUrl+'/position/list/nbhId',this.value)
     },
@@ -212,7 +241,7 @@ export default {
           <el-table-column prop="noOccupyCount" label="剩余人数" width="100"></el-table-column>
           <el-table-column prop="status" label="状态" width="100">
           </el-table-column>
-          <el-table-column prop="createdAt" label="创建时间" width="200"></el-table-column>
+          <el-table-column :formatter="formatter" prop="createdAt" label="创建时间" width="200"></el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
             <template v-slot="scope">
               <el-button type="text" icon="el-icon-edit" circle @click="handleEdit(scope.row)"></el-button>
