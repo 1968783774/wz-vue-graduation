@@ -188,7 +188,7 @@ export default {
             <el-option
                 v-for="item in this.options"
                 :key="item.id"
-                :label="item.neighbourhoodName"
+                :label="item.name"
                 :value="item.id">
             </el-option>
           </el-select>
@@ -213,7 +213,7 @@ export default {
         <el-option
             v-for="item in this.options"
             :key="item.id"
-            :label="item.neighbourhoodName"
+            :label="item.name"
             :value="item.id">
         </el-option>
       </el-select>
