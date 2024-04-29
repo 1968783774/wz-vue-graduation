@@ -9,62 +9,7 @@ export default {
       positionOptions: [],
       selectedRows: [],
       value: null,
-      tableDataAside:[
-        {
-          date: '岗位1(10)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '2016-05-03',
-        },
-        {
-          date: '岗位1(10)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '2016-05-03',
-        },
-        {
-          date: '岗位1(10)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '2016-05-03',
-        },
-        {
-          date: '岗位1(10)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '2016-05-03',
-        },{
-          date: '岗位1(10)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '2016-05-03',
-        },
-        {
-          date: '岗位1(10)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '岗位12(11)',
-        }, {
-          date: '2016-05-03',
-        },
-
-      ],
+      tableDataAside:[],
       formData:{
         name: '',
         positionId: null,
@@ -163,15 +108,42 @@ export default {
     },
 
     filter() {
-      if (this.value === null||this.value.length === 0) {
+      if (this.value === null || this.value.length === 0) {
         return
       }
-      console.log(this.value)
-      this.$commonMethods.getDataByParams(this,this.$httpUrl+'/position/list/nbhId',this.value)
+      this.$axios.get(this.$httpUrl + '/staff/list/nbhId', {
+        params: {
+          neighbourhoodId: this.value
+        }
+      })
+          .then(res => {
+            if (res.data.code === 200) {
+              this.tableData = res.data.data;
+              this.tableDataAside = [];
+              this.tableData.forEach(item => {
+                let combinedNameId = item.positionName + '(' + item.neighbourhoodName + ')';
+                this.tableDataAside.push({ date: combinedNameId ,neighbourhoodId:item.neighbourhoodId,positionId:item.positionId});
+              });
+            }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
     },
     cancel() {
       this.dialogVisible = false;
       this.resetForm();
+    },
+    handleRowClick(row) {
+      this.$axios.post(this.$httpUrl +'/staff/list/positionIdAndNbhId',{neighbourhoodId:row.neighbourhoodId,positionId:row.positionId})
+          .then(res => {
+             if (res.data.code === 200) {
+               this.tableData=res.data.data;
+             }
+          })
+          .catch(err => {
+            this.$message.error(err);
+          });
     },
     resetForm() {
       this.formData = {
@@ -189,11 +161,12 @@ export default {
     },
   },
   mounted() {
+    this.getAllData();
     this.getNeighbourhoodNameList();
     this.getPositionNameList();
-    this.getAllData();
   },
   beforeMount() {
+
     this.$store.commit("setTypeMenu",{menuType:"property"})
   },
 }
@@ -276,6 +249,7 @@ export default {
           <div>
             <el-table class="my-custom-table"
                       height="720px"
+                      @row-click="handleRowClick"
                       :data="tableDataAside">
               <el-table-column
                   prop="date"
@@ -296,7 +270,7 @@ export default {
               <div v-for="(item, index) in tableData" :key="index" class="staff-info-item">
                 <div style="display: flex;flex-direction:column">
                   <div>
-                    <el-checkbox v-model="selectedRows" :label="item.id" class="checkbox-style"></el-checkbox>
+                    <el-checkbox v-model="selectedRows"  :label="item.id"  class="checkbox-style"></el-checkbox>
                     <span class="table-info-1">{{item.name }}</span>
                     <span class="table-info-2">{{item.positionName }} {{ '(' + item.neighbourhoodName + ')' }}</span>
                   </div>
@@ -339,6 +313,7 @@ export default {
   margin-top: 15px;
   margin-right:30px;
   margin-left:20px;
+  color: white;
 }
 .table-style{
   max-height: 670px;

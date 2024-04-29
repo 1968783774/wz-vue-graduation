@@ -147,7 +147,7 @@ export default {
       // 通过value获取选中的小区对象
       let selectedNeighbourhood = this.options.find(item => item.id === this.value);
       // 将选中的小区的neighbourhoodName保存在name变量中
-      this.neighbourhoodName = selectedNeighbourhood ? selectedNeighbourhood.neighbourhoodName : '';
+      this.neighbourhoodName = selectedNeighbourhood ? selectedNeighbourhood.name : '';
       console.log(this.value)
       this.$commonMethods.getDataByParams(this,this.$httpUrl+'/position/list/nbhId',this.value)
     },

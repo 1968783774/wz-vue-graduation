@@ -53,6 +53,15 @@ const commonMethods = {
                 if(vm.initChart){
                     vm.initChart();
                 }
+                if(vm.tableDataAside){
+                    vm.tableDataAside = [];
+                    console.log(vm.tableData)
+                    vm.tableData.forEach(item => {
+                        let combinedNameId = item.positionName + '(' + item.neighbourhoodName + ')';
+                        vm.tableDataAside.push({ date: combinedNameId ,neighbourhoodId:item.neighbourhoodId,positionId:item.positionId});
+                    });
+                    console.log(vm.tableDataAside)
+                }
             } else {
                 vm.$message({
                     message: '系统出错，请联系管理员',
