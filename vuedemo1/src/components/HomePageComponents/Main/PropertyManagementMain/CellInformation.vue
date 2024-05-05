@@ -123,6 +123,11 @@ export default {
       }
     },
 
+    down(){
+      window.location.href=this.$httpUrl+'/neighbourhood/down';
+      this.$message.success("导出成功");
+    },
+
     handleDateChange(value) {
       if (value && value.length === 2) {
         let localStartDateTime = value[0]
@@ -179,6 +184,7 @@ export default {
       </el-date-picker>
       <el-button plain round @click="showForm" type="primary">新增小区</el-button>
       <el-button plain round @click="deleteSelectedIds" type="danger">删除小区</el-button>
+      <el-button plain round @click="down" type="warning">导出</el-button>
       <el-dialog :visible.sync="dialogVisible">
         <span slot="title" style="font-size: 20px;margin-bottom: 10px">{{dialogTitle}}</span>
         <el-form label-width="80px">
