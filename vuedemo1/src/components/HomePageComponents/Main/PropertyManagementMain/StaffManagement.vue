@@ -29,6 +29,13 @@ export default {
 
     }
   },
+  watch: {
+    'formData.neighbourhoodId': function(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.formData.positionId = null; // 重置positionId的值
+      }
+    }
+  },
   methods: {
     right,
     deleteData(){
@@ -75,8 +82,8 @@ export default {
             this.$message.error(err);
           });
     },
-    getPositionNameList() {
-      this.$axios.get(this.$httpUrl +'/position/nameList')
+    getPositionsByNbhId() {
+      this.$axios.get(this.$httpUrl +'/position/list/nbhId' ,{ params:{neighbourhoodId:this.formData.neighbourhoodId}  })
           .then(res => {
             if (res.data.code === 200) {
               this.positionOptions = res.data.data;
@@ -163,7 +170,6 @@ export default {
   mounted() {
     this.getAllData();
     this.getNeighbourhoodNameList();
-    this.getPositionNameList();
   },
   beforeMount() {
 
@@ -180,20 +186,20 @@ export default {
         <el-form-item label="员工姓名">
           <el-input v-model="formData.name"></el-input>
         </el-form-item>
-        <el-form-item label="所属职位">
-          <el-select v-model="formData.positionId">
+        <el-form-item label="所属小区">
+          <el-select v-model="formData.neighbourhoodId" @change="getPositionsByNbhId">
             <el-option
-                v-for="item in this.positionOptions"
+                v-for="item in this.neighbourhoodOptions"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属小区">
-          <el-select v-model="formData.neighbourhoodId">
+        <el-form-item label="所属职位">
+          <el-select v-model="formData.positionId" :disabled="!formData.neighbourhoodId">
             <el-option
-                v-for="item in this.neighbourhoodOptions"
+                v-for="item in this.positionOptions"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id">
