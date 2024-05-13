@@ -12,6 +12,10 @@ import ParkManagement from "@/components/HomePageComponents/Main/ParkManagementM
 import StallManagement from "@/components/HomePageComponents/Main/ParkManagementMain/StallManagement.vue";
 import CarManagement from "@/components/HomePageComponents/Main/ParkManagementMain/CarManagement.vue";
 import VehiclesPresent from "@/components/HomePageComponents/Main/ParkManagementMain/VehiclesPresent.vue";
+import HouseManagement from "@/components/HomePageComponents/Main/NeighbourhoodMain/HouseManagement.vue";
+import PropertyRegistration from "@/components/HomePageComponents/Main/NeighbourhoodMain/PropertyRegistration.vue";
+import CommunityStructure from "@/components/HomePageComponents/Main/NeighbourhoodMain/CommunityStructure.vue";
+import NeighbourhoodPublicity from "@/components/HomePageComponents/Main/NeighbourhoodMain/NeighbourhoodPublicity.vue";
 
 Vue.use(VueRouter)
 
@@ -70,6 +74,28 @@ const routes = [
                 path: 'record',
                 component: ParkingRecord
             }
+        ]
+    },
+    {
+        path: '/neighbourhood',
+        component:PropertyManagement,
+        children:[
+            {
+                path:'houses',
+                component:HouseManagement
+            },
+            {
+                path: 'register',
+                component: PropertyRegistration
+            },
+            {
+                path: 'structure',
+                component: CommunityStructure
+            },
+            {
+                path: 'publicity',
+                component: NeighbourhoodPublicity
+            },
         ]
     },
 

@@ -36,15 +36,15 @@ export default {
     <el-card  class="drawer-card-style">
       <div style="display: flex;flex-direction: row;">
         <div>
-          <el-button class="property-button" @click="selectMenuItem('/property/1')">
+          <el-button class="property-button" @click="selectMenuItem('/neighbourhood/houses','neighbourhood')">
             <i class="el-icon-office-building" style="margin-right: 5px;"></i>小区管理</el-button>
         </div>
         <el-divider direction="vertical"></el-divider>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: flex-start">
-          <el-button class="menu-button">业务受理</el-button>
-          <el-button class="menu-button">产权登记</el-button>
-          <el-button class="menu-button">小区公示</el-button>
-          <el-button class="menu-button">小区结构</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/neighbourhood/houses','neighbourhood')">房屋管理</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/neighbourhood/register','neighbourhood')">产权登记</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/neighbourhood/structure','neighbourhood')">小区结构</el-button>
+          <el-button class="menu-button" @click="selectMenuItem('/neighbourhood/publicity','neighbourhood')">小区公示</el-button>
         </div>
       </div>
     </el-card>

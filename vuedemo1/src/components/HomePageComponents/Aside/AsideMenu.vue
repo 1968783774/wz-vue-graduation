@@ -74,6 +74,30 @@ export default {
         <span slot="title">停车记录</span>
       </el-menu-item>
     </el-menu>
+
+    <el-menu
+        class="wzz"
+        router="router"
+        :default-active="activeIndex"
+        v-if="getTypeMenu === 'neighbourhood'"
+    >
+      <el-menu-item index="/neighbourhood/houses" style="color: rgba(140,140,140)">
+        <i class="el-icon-menu"></i>
+        <span slot="title">房屋管理</span>
+      </el-menu-item>
+      <el-menu-item index="/neighbourhood/register" style="color: rgba(140,140,140)">
+        <i class="el-icon-menu"></i>
+        <span slot="title">产权登记</span>
+      </el-menu-item>
+      <el-menu-item index="/neighbourhood/structure" style="color: rgba(140,140,140)">
+        <i class="el-icon-setting"></i>
+        <span slot="title">小区结构</span>
+      </el-menu-item>
+      <el-menu-item index="/neighbourhood/publicity" style="color: rgba(140,140,140)">
+        <i class="el-icon-setting"></i>
+        <span slot="title">小区公示</span>
+      </el-menu-item>
+    </el-menu>
   </div>
 </template>
 
